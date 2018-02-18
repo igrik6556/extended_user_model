@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load staticfiles i18n %}
+
+{% block title %}{% trans "Registration" %}{% endblock %}
+
+{% block content %}
+<form action="" method="POST">
+  {% csrf_token %}
+  {% for field in form.hidden_fields %}
+    {{ field }}
+  {% endfor %}
+
+  {% for field in form.visible_fields %}
+    {% if field.errors|length > 0 %}
+      {% for error in field.errors %}
+        <strong>{{ error }}</strong>
+      {% endfor %}
+    {% endif %}
+    {% if field.help_text %}
+      {{ field.help_text }}
+    {% endif %}
+    <p>{{ field.label }}:</p>
+    <p>{{ field }}</p>
+  {% endfor %}
+<input type="submit" value={% trans "Confirm" %}>
+</form>
+<a href="{% url 'extuser:confirmation_resend' %}">{% trans "Resend confirmation email" %}</a>
+{% endblock content %}

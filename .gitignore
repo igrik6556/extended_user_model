@@ -2,3 +2,4 @@
 *.pyc
 /.idea
 *.sqlite3
+extended_user/local_settings.py

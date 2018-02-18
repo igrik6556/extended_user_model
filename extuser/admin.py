@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthAdmin
-from extuser.models import User
+from extuser.models import User, EmailConfirmation
 from extuser.forms import UserChangeForm, UserCreationForm
 
 from django.utils.translation import ugettext as _
@@ -11,9 +11,9 @@ class UserAdmin(AuthAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ('email', 'username', 'is_superuser', 'is_staff',
+    list_display = ('email', 'username', 'is_confirm', 'is_superuser', 'is_staff',
                     'is_active', 'date_joined', 'last_login')
-    list_filter = ('is_staff', 'is_active', 'is_superuser', 'date_joined', 'last_login')
+    list_filter = ('is_confirm', 'is_staff', 'is_active', 'is_superuser', 'date_joined', 'last_login')
     filter_horizontal = ('groups', 'user_permissions',)
     search_fields = ['username', 'email']
     fieldsets = (
@@ -27,7 +27,7 @@ class UserAdmin(AuthAdmin):
         }),
         (_('Permissions'), {
             'fields': (
-                'is_active', 'is_staff', 'is_superuser', 'groups',
+                'is_confirm', 'is_active', 'is_staff', 'is_superuser', 'groups',
                 'user_permissions'
             )
         }),
@@ -42,4 +42,6 @@ class UserAdmin(AuthAdmin):
         }),
     )
 
+
+admin.site.register(EmailConfirmation)
 admin.site.register(User, UserAdmin)
